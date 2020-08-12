@@ -19,7 +19,6 @@ class NetworkManager: ObservableObject{
                 let session = URLSession(configuration: .default)
                 let task = session.dataTask(with: url) { (data, response, error) in
                     if error == nil {
-                        
                         //Decoding JSON
                         let decoder = JSONDecoder()
                         if let safeData = data {
@@ -27,6 +26,7 @@ class NetworkManager: ObservableObject{
                                 let results = try decoder.decode(Result.self, from: safeData)
                                 DispatchQueue.main.async {
                                     self.data = results.hourly.data
+                                    print("Loaded Data/Refreshed")
                                 }
                             } catch {
                                 print(error)
